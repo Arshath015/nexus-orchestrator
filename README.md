@@ -24,6 +24,8 @@ The system is designed as a backend decision engine accessible via API endpoints
 - Accepts user feedback
 - Generates evaluation reports
 
+Schema layer reserved for request/response validation expansion.
+
 ---
 
 ## Architecture
