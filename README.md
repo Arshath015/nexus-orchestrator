@@ -25,6 +25,9 @@ The system is designed as a backend decision engine accessible via API endpoints
 - Generates evaluation reports
 
 Schema layer reserved for request/response validation expansion.
+The models layer was included to support schema validation using Pydantic.
+Since this POC focused on orchestration logic rather than strict API contracts, raw dictionaries were used for flexibility.
+In a production version I would move request/response definitions into typed schemas to enforce validation and improve documentation.
 
 ---
 
