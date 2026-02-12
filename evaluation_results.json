@@ -1,0 +1,586 @@
+[
+  {
+    "scenario_id": "SCENARIO-001",
+    "difficulty": "level-1",
+    "description": "Simple approval \u00e2\u20ac\u201d no conflicts",
+    "timestamp": "2026-02-12T12:33:30.400011",
+    "latency_sec": 3.951991081237793,
+    "expected_conflicts": [],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-1001",
+        "decision": "approved",
+        "justification": "Matching competitor pricing is important, and the confidence level is high. While the profit margin decreases, maintaining sales volume is crucial, and stock levels are healthy. Monitor sales velocity after the price change."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-002",
+    "difficulty": "level-2",
+    "description": "Double discount conflict \u00e2\u20ac\u201d price cut + promotion",
+    "timestamp": "2026-02-12T12:33:34.352302",
+    "latency_sec": 6.748070240020752,
+    "expected_conflicts": [
+      "MARGIN_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "Potential Margin Erosion"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "MARGIN_CONFLICT"
+      ],
+      "extra": [
+        "Potential Margin Erosion"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-2002",
+        "decision": "approved",
+        "justification": "Price reduction aligns with price optimization strategy."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "RUN_PROMOTION",
+        "product_id": "SKU-2002",
+        "decision": "modified",
+        "justification": "Discount reduced to 8.8% to ensure margin remains above 15% after price reduction. Parameters: discount_percent=8.8, duration_hours=24"
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-003",
+    "difficulty": "level-3",
+    "description": "Classic three-way conflict",
+    "timestamp": "2026-02-12T12:33:41.100636",
+    "latency_sec": 6.697327136993408,
+    "expected_conflicts": [
+      "RESOURCE_CONFLICT",
+      "MARGIN_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "Pricing vs. Inventory"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "RESOURCE_CONFLICT",
+        "MARGIN_CONFLICT"
+      ],
+      "extra": [
+        "Pricing vs. Inventory"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-3003",
+        "decision": "modified",
+        "justification": "Reducing the price by a slightly smaller amount to maintain some margin while addressing competitor pricing, but minimizing the demand increase to avoid stockout. Change proposed price to $849."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "ALERT_LOW_STOCK",
+        "product_id": "SKU-3003",
+        "decision": "approved",
+        "justification": "Confirming the urgent need to address the low stock situation. Initiate emergency restocking procedures."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "RUN_FLASH_SALE",
+        "product_id": "SKU-3003",
+        "decision": "rejected",
+        "justification": "The flash sale would exacerbate the already critical low stock situation, leading to a stockout and lost sales. Postpone the sale until inventory is replenished."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-004",
+    "difficulty": "level-4",
+    "description": "Cascading bundle effect",
+    "timestamp": "2026-02-12T12:33:47.798209",
+    "latency_sec": 1.7943127155303955,
+    "expected_conflicts": [
+      "CASCADE_CONFLICT"
+    ],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "CASCADE_CONFLICT"
+      ],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-005",
+    "difficulty": "level-5",
+    "description": "Temporal reasoning \u00e2\u20ac\u201d restock timing",
+    "timestamp": "2026-02-12T12:33:49.592764",
+    "latency_sec": 3.604414939880371,
+    "expected_conflicts": [
+      "TEMPORAL_CONFLICT"
+    ],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "TEMPORAL_CONFLICT"
+      ],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PromoBot",
+        "action": "RUN_WEEKEND_SALE",
+        "product_id": "SKU-5005",
+        "decision": "approved",
+        "justification": "Acceptable margin after discount and inventory will be replenished before sale peak."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-006",
+    "difficulty": "level-5",
+    "description": "Margin death spiral",
+    "timestamp": "2026-02-12T12:33:53.197414",
+    "latency_sec": 4.855716943740845,
+    "expected_conflicts": [
+      "MARGIN_CONFLICT"
+    ],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "MARGIN_CONFLICT"
+      ],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-6006",
+        "decision": "approved",
+        "justification": "Reduces price to remain competitive while maintaining an acceptable margin."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "APPLY_COUPON_STACK",
+        "product_id": "SKU-6006",
+        "decision": "rejected",
+        "justification": "Applying the coupon would reduce the margin below the minimum threshold."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-007",
+    "difficulty": "level-6",
+    "description": "Multi-product portfolio optimization",
+    "timestamp": "2026-02-12T12:33:58.053405",
+    "latency_sec": 7.893487215042114,
+    "expected_conflicts": [
+      "PORTFOLIO_CONFLICT",
+      "CATEGORY_OVERLAP"
+    ],
+    "detected_conflicts": [
+      "PRICE_CONFLICT",
+      "PROMO_CONFLICT"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "CATEGORY_OVERLAP",
+        "PORTFOLIO_CONFLICT"
+      ],
+      "extra": [
+        "PRICE_CONFLICT",
+        "PROMO_CONFLICT"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-7001",
+        "decision": "approved",
+        "justification": "Reducing price increases volume and is in line with margin target."
+      },
+      {
+        "bot": "PriceBot",
+        "action": "INCREASE_PRICE",
+        "product_id": "SKU-7002",
+        "decision": "approved",
+        "justification": "Increasing price improves margin."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "RUN_CATEGORY_SALE",
+        "product_id": "CATEGORY-ELECTRONICS",
+        "decision": "modified",
+        "justification": "Running a category-wide sale, excluding SKU-7003, discount at 15% for 3 days, does not interfere with clearance sale."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "ALERT_OVERSTOCK",
+        "product_id": "SKU-7003",
+        "decision": "approved",
+        "justification": "Validating the overstock condition of product SKU-7003"
+      },
+      {
+        "bot": "PromoBot",
+        "action": "CLEARANCE_SALE",
+        "product_id": "SKU-7003",
+        "decision": "approved",
+        "justification": "The clearance sale is necessary to address overstock. Prioritizing clearance sale over general category sale for this SKU."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-008",
+    "difficulty": "level-4",
+    "description": "Competing urgencies",
+    "timestamp": "2026-02-12T12:34:05.947251",
+    "latency_sec": 4.909337043762207,
+    "expected_conflicts": [
+      "PRIORITY_CONFLICT"
+    ],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "PRIORITY_CONFLICT"
+      ],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "EMERGENCY_PRICE_MATCH",
+        "product_id": "SKU-8008",
+        "decision": "approved",
+        "justification": "Approved price match to capitalize on competitor's flash sale. The sale ends in 6 hours, so swift action is crucial."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "RESERVE_STOCK",
+        "product_id": "SKU-8008",
+        "decision": "approved",
+        "justification": "Approved stock reservation to fulfill a high-value B2B order. The remaining stock should adequately cover B2C demand until the order is fulfilled."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-009",
+    "difficulty": "level-3",
+    "description": "Self-correction test \u00e2\u20ac\u201d bad prediction",
+    "timestamp": "2026-02-12T12:34:10.856849",
+    "feedback_result": {
+      "status": "feedback recorded"
+    },
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-010",
+    "difficulty": "level-6",
+    "description": "Adversarial input \u00e2\u20ac\u201d contradictory confidence",
+    "timestamp": "2026-02-12T12:34:10.859455",
+    "latency_sec": 4.482107400894165,
+    "expected_conflicts": [
+      "DATA_INTEGRITY_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "PriceVsInventory"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "DATA_INTEGRITY_CONFLICT"
+      ],
+      "extra": [
+        "PriceVsInventory"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-1010",
+        "decision": "rejected",
+        "justification": "Rejected due to critically low stock levels. Implementing the price reduction would lead to immediate stockout and lost sales. Cannot fulfill increased demand."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "STOCK_HEALTHY",
+        "product_id": "SKU-1010",
+        "decision": "approved",
+        "justification": "Inventory bot action approved. Stock is critically low. Replenishment should be prioritized."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-011",
+    "difficulty": "level-5",
+    "description": "Substitution reasoning",
+    "timestamp": "2026-02-12T12:34:15.341821",
+    "latency_sec": 4.044588804244995,
+    "expected_conflicts": [],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "InventoryBot",
+        "action": "ALERT_STOCKOUT_IMMINENT",
+        "product_id": "SKU-1101",
+        "decision": "approved",
+        "justification": "Confirming the criticality of restocking efforts for SKU-1101."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "PROMOTE_ALTERNATIVE",
+        "product_id": "SKU-1102",
+        "decision": "approved",
+        "justification": "Approved promotion of SKU-1102 at 10% discount due to SKU-1101 stockout and high similarity. This helps prevent lost sales."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-012",
+    "difficulty": "level-4",
+    "description": "Time-zone complexity",
+    "timestamp": "2026-02-12T12:34:19.386647",
+    "latency_sec": 5.150926113128662,
+    "expected_conflicts": [
+      "OPERATIONAL_CONFLICT"
+    ],
+    "detected_conflicts": [],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "OPERATIONAL_CONFLICT"
+      ],
+      "extra": [],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PromoBot",
+        "action": "RUN_MIDNIGHT_SALE",
+        "product_id": "SKU-1201",
+        "decision": "modified",
+        "justification": "Modified discount to 15% due to warehouse shift timing and lack of auto-fulfillment. Original discount level could overwhelm available fulfillment capacity, causing delays and customer dissatisfaction."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "WAREHOUSE_SHIFT_END",
+        "product_id": "WAREHOUSE-MAIN",
+        "decision": "approved",
+        "justification": "Approved to update warehouse shift information. This provides crucial context for managing inventory and order fulfillment during the midnight sale."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-013",
+    "difficulty": "level-6",
+    "description": "Customer segment conflict",
+    "timestamp": "2026-02-12T12:34:24.537831",
+    "latency_sec": 4.969996452331543,
+    "expected_conflicts": [
+      "SEGMENT_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "PriceConflict"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "SEGMENT_CONFLICT"
+      ],
+      "extra": [
+        "PriceConflict"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PromoBot",
+        "action": "LOYALTY_EXCLUSIVE_SALE",
+        "product_id": "SKU-1301",
+        "decision": "approved",
+        "justification": "This promotion targets high-value Platinum members, increasing loyalty and LTV. The calculated price after the discount aligns with market demands and does not significantly deviate from PriceBot's proposal."
+      },
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-1301",
+        "decision": "modified",
+        "justification": "Modified to ensure non-platinum members receive the same discount as platinum members during the loyalty promotion. Reduces friction between platinum and non-platinum members."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-014",
+    "difficulty": "level-5",
+    "description": "Regulatory constraint",
+    "timestamp": "2026-02-12T12:34:29.508169",
+    "latency_sec": 4.009514808654785,
+    "expected_conflicts": [
+      "REGULATORY_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "Advertising Standards"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "REGULATORY_CONFLICT"
+      ],
+      "extra": [
+        "Advertising Standards"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "FLASH_DISCOUNT",
+        "product_id": "SKU-1401",
+        "decision": "modified",
+        "justification": "Discount adjusted to reflect a recent, genuine 'original' price to comply with advertising standards. Displayed original price changed to 599, Sale Price 499, showing 'Save 100'."
+      }
+    ],
+    "status": "success"
+  },
+  {
+    "scenario_id": "SCENARIO-015",
+    "difficulty": "level-6",
+    "description": "Full chaos \u00e2\u20ac\u201d 8 actions, 5 products, multiple conflicts",
+    "timestamp": "2026-02-12T12:34:33.517953",
+    "latency_sec": 7.841137170791626,
+    "expected_conflicts": [
+      "CASCADE_CONFLICT",
+      "CATEGORY_OVERLAP",
+      "PORTFOLIO_CONFLICT",
+      "RESOURCE_CONFLICT"
+    ],
+    "detected_conflicts": [
+      "Price and Promotion Conflict",
+      "Inventory and Promotion Conflict",
+      "Overstock and Clearance Conflict"
+    ],
+    "scoring": {
+      "correct": [],
+      "missed": [
+        "CATEGORY_OVERLAP",
+        "CASCADE_CONFLICT",
+        "PORTFOLIO_CONFLICT",
+        "RESOURCE_CONFLICT"
+      ],
+      "extra": [
+        "Price and Promotion Conflict",
+        "Inventory and Promotion Conflict",
+        "Overstock and Clearance Conflict"
+      ],
+      "score": 0.0
+    },
+    "final_actions": [
+      {
+        "bot": "PriceBot",
+        "action": "REDUCE_PRICE",
+        "product_id": "SKU-A",
+        "decision": "modified",
+        "justification": "Reduce price to $849 instead of $799. Bundle promotion takes priority. Reduce price slightly to increase bundle attractiveness without excessively diminishing margin."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "BUNDLE",
+        "product_id": "SKU-A",
+        "decision": "approved",
+        "justification": "Bundle SKU-A with SKU-B with 20% discount. This encourages sales of both items. Adjust SKU-A price as needed."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "LOW_STOCK",
+        "product_id": "SKU-B",
+        "decision": "approved",
+        "justification": "Acknowledge low stock. Closely monitor sales of SKU-B, as it is part of the bundle promotion. Consider halting promotion if stock dips below a critical threshold."
+      },
+      {
+        "bot": "PriceBot",
+        "action": "INCREASE_PRICE",
+        "product_id": "SKU-C",
+        "decision": "approved",
+        "justification": "Increase price of SKU-C to $1299. Independent of other actions and should increase profitability."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "CATEGORY_SALE",
+        "product_id": "CATEGORY-X",
+        "decision": "rejected",
+        "justification": "Category sale on Category X which contains SKU-A and SKU-C is rejected as SKU-A is bundled and SKU-C has its price increased. This avoids price confusion."
+      },
+      {
+        "bot": "InventoryBot",
+        "action": "OVERSTOCK",
+        "product_id": "SKU-D",
+        "decision": "approved",
+        "justification": "Acknowledge overstock and low velocity of SKU-D. Clearance might be necessary."
+      },
+      {
+        "bot": "PromoBot",
+        "action": "CLEARANCE",
+        "product_id": "SKU-D",
+        "decision": "approved",
+        "justification": "Implement clearance sale of 50% on SKU-D due to overstock. Monitor sales closely."
+      },
+      {
+        "bot": "PriceBot",
+        "action": "COMPETITOR_MATCH",
+        "product_id": "SKU-E",
+        "decision": "approved",
+        "justification": "Match competitor's price for SKU-E at $449. This is a reasonable action to remain competitive."
+      }
+    ],
+    "status": "success"
+  }
+]
