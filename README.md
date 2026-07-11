@@ -1,5 +1,7 @@
 # Nexus Meta-Agent Orchestrator
 
+![Python](https://img.shields.io/badge/python-3.x-blue.svg)
+
 AI-Driven Decision Fusion System for Multi-Bot Coordination
 
 ---
