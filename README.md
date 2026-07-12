@@ -171,3 +171,10 @@ Generates:
 
 Arshath Farwyz
 AI Engineer
+
+
+## Requirements
+
+```
+pip install -r requirements.txt
+```
